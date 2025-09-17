@@ -16,7 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QListView, QMainWindow,
-    QMenuBar, QSizePolicy, QStatusBar, QWidget)
+    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,6 +36,12 @@ class Ui_MainWindow(object):
         font.setPointSize(17)
         font.setBold(True)
         self.label.setFont(font)
+        self.move_right = QPushButton(self.centralwidget)
+        self.move_right.setObjectName(u"move_right")
+        self.move_right.setGeometry(QRect(164, 570, 31, 24))
+        self.move_left = QPushButton(self.centralwidget)
+        self.move_left.setObjectName(u"move_left")
+        self.move_left.setGeometry(QRect(104, 570, 31, 24))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -52,5 +59,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0441 \u043f\u043e\u043a\u0435\u043c\u043e\u043d\u0430\u043c\u0438:", None))
+        self.move_right.setText(QCoreApplication.translate("MainWindow", u">>", None))
+        self.move_left.setText(QCoreApplication.translate("MainWindow", u"<<", None))
     # retranslateUi
 

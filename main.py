@@ -1,7 +1,7 @@
 # import pokepy
 # client = pokepy.V2Client()
 # print(client.get_pokemon())
-import requests,json,ui_mainwindow,pokemon_list_model,random
+import requests,json,ui_mainwindow,pokemon_list_model,random,pokemon_search
 from PySide6.QtWidgets import QApplication,QMainWindow
 from PySide6.QtCore import QSortFilterProxyModel
 a=requests.get('https://pokeapi.co/api/v2/pokemon/')
@@ -10,7 +10,7 @@ print(pokemon_list)
 # b=json.loads(a.content)
 # print(b)
 poklist=pokemon_list_model.PokList()
-
+poklist.rowCount()
 
 sort=QSortFilterProxyModel()
 sort.setSourceModel(poklist)
@@ -25,6 +25,8 @@ ui.pokemonView.setModel(sort)
 # ui.move_right.clicked.connect(poklist.spicok_change)
 main_window.show()
 c.exec()
+
+pok_search=pokemon_search.PokemonSearch(ui.centralwidget)
 
 
 #

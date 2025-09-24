@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QListView, QMainWindow,
     QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QTextEdit, QWidget)
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -42,9 +42,6 @@ class Ui_MainWindow(object):
         self.move_left = QPushButton(self.centralwidget)
         self.move_left.setObjectName(u"move_left")
         self.move_left.setGeometry(QRect(104, 570, 31, 24))
-        self.textEdit = QTextEdit(self.centralwidget)
-        self.textEdit.setObjectName(u"textEdit")
-        self.textEdit.setGeometry(QRect(620, 160, 104, 71))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")

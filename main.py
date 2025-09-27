@@ -16,7 +16,6 @@ search=QCompleter(poklist)
 
 
 
-
 c=QApplication()
 main_window=QMainWindow()
 
@@ -24,10 +23,10 @@ ui=ui_mainwindow.Ui_MainWindow()
 ui.setupUi(main_window)
 
 
-pok_search=pokemon_search.PokemonSearch(ui.centralwidget,ui.pokemonView,poklist)
-ui.pokemonView.setModel(pok_search.filter())
-# ui.move_left.clicked.connect(poklist.spicok_change)
-# ui.move_right.clicked.connect(poklist.spicok_change)
+pok_search1=pokemon_search.PokemonSearch(ui.pokemonView)
+pok_search2=pokemon_search.PokemonSearch(ui.poklist)
+
+
 main_window.show()
 c.exec()
 

@@ -15,15 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QListView, QMainWindow,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QListView,
+    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+    QStatusBar, QTableView, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(917, 663)
+        MainWindow.resize(1577, 663)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.pokemonView = QListView(self.centralwidget)
@@ -45,10 +45,13 @@ class Ui_MainWindow(object):
         self.Pokwidget = QWidget(self.centralwidget)
         self.Pokwidget.setObjectName(u"Pokwidget")
         self.Pokwidget.setGeometry(QRect(350, 60, 431, 501))
+        self.tableView = QTableView(self.centralwidget)
+        self.tableView.setObjectName(u"tableView")
+        self.tableView.setGeometry(QRect(850, 60, 521, 501))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 917, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1577, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

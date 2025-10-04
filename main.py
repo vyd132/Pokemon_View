@@ -25,7 +25,7 @@ ui.setupUi(main_window)
 
 
 # ui.Pokwidget.hide()
-
+ui.tableView.setModel(poklist)
 ui.pokemonView.setModel(poklist)
 
 
@@ -33,7 +33,12 @@ pokwidget=pokemon_widget.Pok_Widget(ui.Pokwidget)
 
 def aba():
     print(ui.pokemonView.currentIndex())
-    pokwidget.widget_change(ui.pokemonView.currentIndex().model().data(ui.pokemonView.currentIndex()))
+    model=ui.pokemonView.model()
+    index=ui.pokemonView.currentIndex()
+    if not index.isValid():
+        return
+    index_url=model.index(index.row(),1)
+    pokwidget.widget_change(model.data(index_url))
 
 # ui.pokemonView.clicked.connect(aba)
 # b.selectionChanged.connect(aba)
@@ -41,6 +46,7 @@ def aba():
 
 
 pok_search1=pokemon_search.PokemonSearch(ui.pokemonView)
+
 
 ui.pokemonView.selectionModel().currentChanged.connect(aba)
 

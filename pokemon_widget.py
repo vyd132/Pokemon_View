@@ -1,5 +1,8 @@
-from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget
-import ui_widget,requests,json
+from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraphicsScene,QGraphicsPixmapItem
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Qt
+import ui_widget,requests,json,QtPixmapUtils
+from io import BytesIO
 
 
 
@@ -8,6 +11,7 @@ class Pok_Widget():
         self.a=QWidget(parent)
         self.b=ui_widget.Ui_Form()
         self.b.setupUi(self.a)
+
 
 
     def widget_change(self,obj):
@@ -21,6 +25,11 @@ class Pok_Widget():
         self.b.speed.setText(f"Скорость {self.stats_view(pok_dict['stats'],'speed')}")
         self.b.weight.setText(f"Вес {pok_dict['weight']}")
         self.b.height.setText(f"Рост {pok_dict['height']}")
+
+        self.b.graphicsView.setScene(self.scene_create(pok_dict['sprites']['front_default']))
+        # self.b.graphicsView.setSceneRect(0,0,self.b.graphicsView.sceneRect().width(),self.b.graphicsView.sceneRect().height())
+        self.b.graphicsView.fitInView(self.b.graphicsView.sceneRect(),Qt.AspectRatioMode.KeepAspectRatio)
+
         print(obj)
 
     def stats_view(self,stats,el):
@@ -28,3 +37,16 @@ class Pok_Widget():
             if stat['stat']['name']==el:
                 return stat['base_stat']
 
+    def scene_create(self,url):
+        image_cont = requests.get(url)
+        image = BytesIO(image_cont.content).read()
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(image)
+        pixmap = QtPixmapUtils.crop_transparent_area(pixmap)
+
+        item = QGraphicsPixmapItem(pixmap)
+
+        scene = QGraphicsScene()
+        scene.addItem(item)
+        return scene

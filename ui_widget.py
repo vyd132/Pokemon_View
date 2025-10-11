@@ -15,7 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QGraphicsView, QLabel, QPushButton,
+    QSizePolicy, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -52,6 +53,15 @@ class Ui_Form(object):
         self.defense.setObjectName(u"defense")
         self.defense.setGeometry(QRect(0, 200, 431, 31))
         self.defense.setFont(font)
+        self.graphicsView = QGraphicsView(Form)
+        self.graphicsView.setObjectName(u"graphicsView")
+        self.graphicsView.setGeometry(QRect(170, 30, 256, 192))
+        self.imageButton = QPushButton(Form)
+        self.imageButton.setObjectName(u"imageButton")
+        self.imageButton.setGeometry(QRect(190, 240, 221, 41))
+        font1 = QFont()
+        font1.setPointSize(15)
+        self.imageButton.setFont(font1)
 
         self.retranslateUi(Form)
 
@@ -67,5 +77,6 @@ class Ui_Form(object):
         self.speed.setText(QCoreApplication.translate("Form", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c", None))
         self.attack.setText(QCoreApplication.translate("Form", u"\u0410\u0442\u0430\u043a\u0430", None))
         self.defense.setText(QCoreApplication.translate("Form", u"\u0417\u0430\u0449\u0438\u0442\u0430", None))
+        self.imageButton.setText(QCoreApplication.translate("Form", u"\u0412\u0441\u0435 \u043a\u0430\u0440\u0442\u0438\u043d\u043a\u0438", None))
     # retranslateUi
 

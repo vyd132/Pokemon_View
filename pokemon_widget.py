@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraphicsScene,QGraphicsPixmapItem
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt
-import ui_widget,requests,json,QtPixmapUtils
+import ui_widget,requests,json,QtPixmapUtils,imageWindowMain
 from io import BytesIO
 
 
@@ -11,7 +11,7 @@ class Pok_Widget():
         self.a=QWidget(parent)
         self.b=ui_widget.Ui_Form()
         self.b.setupUi(self.a)
-
+        self.b.imageButton.clicked.connect(self.image_window_show)
 
 
     def widget_change(self,obj):
@@ -38,6 +38,15 @@ class Pok_Widget():
                 return stat['base_stat']
 
     def scene_create(self,url):
+        pixmap=self.pixmap_create(url)
+
+        item = QGraphicsPixmapItem(pixmap)
+
+        scene = QGraphicsScene()
+        scene.addItem(item)
+        return scene
+
+    def pixmap_create(self,url):
         image_cont = requests.get(url)
         image = BytesIO(image_cont.content).read()
 
@@ -45,8 +54,9 @@ class Pok_Widget():
         pixmap.loadFromData(image)
         pixmap = QtPixmapUtils.crop_transparent_area(pixmap)
 
-        item = QGraphicsPixmapItem(pixmap)
+        return pixmap
 
-        scene = QGraphicsScene()
-        scene.addItem(item)
-        return scene
+    def image_window_show(self):
+        image=self.pixmap_create('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png')
+        self.window=imageWindowMain.Image_Mian_Window(None,image)
+        self.window.a.show()

@@ -1,7 +1,7 @@
 # import pokepy
 # client = pokepy.V2Client()
 # print(client.get_pokemon())
-import requests,json,ui_mainwindow,pokemon_list_model,random,pokemon_search,ui_widget,pokemon_widget
+import requests,json,ui_mainwindow,pokemon_list_model,random,pokemon_search,ui_widget,pokemon_widget,imageWindowMain
 from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter
 from PySide6.QtCore import QSortFilterProxyModel
 a=requests.get('https://pokeapi.co/api/v2/pokemon/')
@@ -30,6 +30,7 @@ ui.pokemonView.setModel(poklist)
 
 
 pokwidget=pokemon_widget.Pok_Widget(ui.Pokwidget)
+# image_main_widget=imageWindowMain.Image_Mian_Window(None)
 
 def aba():
     print(ui.pokemonView.currentIndex())

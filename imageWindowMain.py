@@ -1,21 +1,40 @@
-from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraphicsScene,QGraphicsPixmapItem,QPushButton
+from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraphicsScene,QGraphicsPixmapItem,QPushButton,QSizePolicy
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt,QSize
 import ui_imageMainform,requests,json,QtPixmapUtils
 from io import BytesIO
 
 class Image_Mian_Window():
-    def __init__(self,parent:QWidget,image):
+    def __init__(self,parent:QWidget,images):
         self.a=QWidget(parent)
         self.b=ui_imageMainform.Ui_Form()
         self.b.setupUi(self.a)
         self.a.show()
-        self.button_image(self.b.Button1,image)
+        self.a.setWindowFlags(Qt.WindowType.Window|Qt.WindowType.MSWindowsFixedSizeDialogHint)
+        self.button_size_block(images[1])
+        ab=lambda :print(self.b.Button1.contentsRect().size())
+        self.b.Button1.clicked.connect(ab)
 
 
 
-    def button_image(self,button:QPushButton,image):
-       image=image.scaled(button.size())
-       button.setIcon(image)
-       button.setIconSize(button.size())
-       print(button.size())
+    def button_image(self,button:QPushButton,image:QPixmap):
+        print(button.contentsRect().size())
+        print(self.b.Button2.contentsRect().size())
+        image=image.scaled(button.contentsRect().width()-20,button.contentsRect().height()-20)
+
+        button.setIcon(image)
+        button.setIconSize(image.size())
+
+        print(image.size())
+
+    def button_size_block(self,image):
+        for button_num in range(1,10):
+            button=f'Button{button_num}'
+            if not hasattr(self.b,button):
+                continue
+            a:QPushButton=getattr(self.b,button)
+            a.setMinimumSize(189,189)
+            a.setMaximumSize(189,189)
+            a.setSizePolicy(QSizePolicy.Policy.Fixed,QSizePolicy.Policy.Fixed)
+            self.button_image(a,image)
+

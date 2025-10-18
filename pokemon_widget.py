@@ -14,6 +14,7 @@ class Pok_Widget():
         self.b.imageButton.clicked.connect(self.image_window_show)
 
 
+
     def widget_change(self,obj):
         self.a.show()
         pok_dict=requests.get(obj)
@@ -29,6 +30,7 @@ class Pok_Widget():
         self.b.graphicsView.setScene(self.scene_create(pok_dict['sprites']['front_default']))
         # self.b.graphicsView.setSceneRect(0,0,self.b.graphicsView.sceneRect().width(),self.b.graphicsView.sceneRect().height())
         self.b.graphicsView.fitInView(self.b.graphicsView.sceneRect(),Qt.AspectRatioMode.KeepAspectRatio)
+        self.image_list=self.image_list_create(pok_dict['sprites'])
 
         print(obj)
 
@@ -46,7 +48,8 @@ class Pok_Widget():
         scene.addItem(item)
         return scene
 
-    def pixmap_create(self,url):
+    @staticmethod
+    def pixmap_create(url):
         image_cont = requests.get(url)
         image = BytesIO(image_cont.content).read()
 
@@ -57,6 +60,17 @@ class Pok_Widget():
         return pixmap
 
     def image_window_show(self):
-        image=self.pixmap_create('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png')
-        self.window=imageWindowMain.Image_Mian_Window(None,image)
+        self.window=imageWindowMain.Image_Mian_Window(None,self.image_list)
         self.window.a.show()
+
+
+    def image_list_create(self,image_dict:dict):
+        images_list=[]
+        for value in image_dict.values():
+            if isinstance(value,str) :
+                images_list.append(value)
+        images_list=list(map(self.pixmap_create,images_list))
+        return images_list
+
+
+

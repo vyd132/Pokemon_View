@@ -41,6 +41,7 @@ def aba():
     index_url=model.index(index.row(),1)
     pokwidget.widget_change(model.data(index_url))
 
+
 # ui.pokemonView.clicked.connect(aba)
 # b.selectionChanged.connect(aba)
 

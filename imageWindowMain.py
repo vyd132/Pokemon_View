@@ -11,23 +11,20 @@ class Image_Mian_Window():
         self.b.setupUi(self.a)
         self.a.show()
         self.a.setWindowFlags(Qt.WindowType.Window|Qt.WindowType.MSWindowsFixedSizeDialogHint)
-        self.button_size_block(images[1])
-        ab=lambda :print(self.b.Button1.contentsRect().size())
-        self.b.Button1.clicked.connect(ab)
+        self.button_size_block(images)
+
 
 
 
     def button_image(self,button:QPushButton,image:QPixmap):
-        print(button.contentsRect().size())
-        print(self.b.Button2.contentsRect().size())
-        image=image.scaled(button.contentsRect().width()-20,button.contentsRect().height()-20)
+        image=image.scaled(button.contentsRect().width()-20,button.contentsRect().height()-20,Qt.AspectRatioMode.KeepAspectRatio)
 
         button.setIcon(image)
         button.setIconSize(image.size())
 
-        print(image.size())
 
-    def button_size_block(self,image):
+
+    def button_size_block(self,images):
         for button_num in range(1,10):
             button=f'Button{button_num}'
             if not hasattr(self.b,button):
@@ -36,5 +33,10 @@ class Image_Mian_Window():
             a.setMinimumSize(189,189)
             a.setMaximumSize(189,189)
             a.setSizePolicy(QSizePolicy.Policy.Fixed,QSizePolicy.Policy.Fixed)
-            self.button_image(a,image)
+            if button_num>len(images):
+                a.setIcon(QPixmap())
+                continue
+            print(images[button_num-1])
+            self.button_image(a,images[button_num-1])
+
 

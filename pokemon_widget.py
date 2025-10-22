@@ -12,6 +12,7 @@ class Pok_Widget():
         self.b=ui_widget.Ui_Form()
         self.b.setupUi(self.a)
         self.b.imageButton.clicked.connect(self.image_window_show)
+        self.window:imageWindowMain.Image_Mian_Window=None
 
 
 
@@ -31,6 +32,8 @@ class Pok_Widget():
         # self.b.graphicsView.setSceneRect(0,0,self.b.graphicsView.sceneRect().width(),self.b.graphicsView.sceneRect().height())
         self.b.graphicsView.fitInView(self.b.graphicsView.sceneRect(),Qt.AspectRatioMode.KeepAspectRatio)
         self.image_list=self.image_list_create(pok_dict['sprites'])
+        if self.window is not None:
+            self.window.button_size_block(self.image_list)
 
         print(obj)
 
@@ -60,6 +63,10 @@ class Pok_Widget():
         return pixmap
 
     def image_window_show(self):
+        if self.window!=None:
+            self.window.a.show()
+            self.window.a.activateWindow()
+            return
         self.window=imageWindowMain.Image_Mian_Window(None,self.image_list)
         self.window.a.show()
 
@@ -68,9 +75,13 @@ class Pok_Widget():
         images_list=[]
         for value in image_dict.values():
             if isinstance(value,str) :
-                images_list.append(value)
-        images_list=list(map(self.pixmap_create,images_list))
+                images_list.append(self.pixmap_create(value))
+            elif isinstance(value,dict):
+                images_list.append(self.image_list_create(value))
+        # images_list=list(map(self.pixmap_create,images_list))
         return images_list
+
+
 
 
 

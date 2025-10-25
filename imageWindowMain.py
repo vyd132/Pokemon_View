@@ -1,7 +1,8 @@
 from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraphicsScene,QGraphicsPixmapItem,QPushButton,QSizePolicy
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt,QSize
-import ui_imageMainform,requests,json,QtPixmapUtils
+import ui_imageMainform,requests,json,QtPixmapUtils,button_helper
+from button_helper import ButtonHelper
 from io import BytesIO
 
 class Image_Mian_Window():
@@ -11,7 +12,9 @@ class Image_Mian_Window():
         self.b.setupUi(self.a)
         self.a.show()
         self.a.setWindowFlags(Qt.WindowType.Window|Qt.WindowType.MSWindowsFixedSizeDialogHint)
+        self.connectors = []
         self.button_size_block(images)
+
 
 
 
@@ -33,10 +36,30 @@ class Image_Mian_Window():
             a.setMinimumSize(189,189)
             a.setMaximumSize(189,189)
             a.setSizePolicy(QSizePolicy.Policy.Fixed,QSizePolicy.Policy.Fixed)
+
+            bh=ButtonHelper(a,ButtonHelper.TYPE_NONE)
+            self.connectors.append(bh)
+
             if button_num>len(images):
                 a.setIcon(QPixmap())
+                bh.set_none()
                 continue
-            print(images[button_num-1])
-            self.button_image(a,images[button_num-1])
+
+            if isinstance(images[button_num-1],QPixmap):
+                self.button_image(a, images[button_num - 1])
+                bh.set_img(images[button_num-1])
+
+            elif isinstance(images[button_num-1],list):
+                img=QPixmap()
+                img.load('folder.png')
+                self.button_image(a, img)
+                bh.set_list(images[button_num-1])
+
+
+
+
+
+
+
 
 

@@ -33,7 +33,7 @@ class Pok_Widget():
         self.b.graphicsView.fitInView(self.b.graphicsView.sceneRect(),Qt.AspectRatioMode.KeepAspectRatio)
         self.image_list=self.image_list_create(pok_dict['sprites'])
         if self.window is not None:
-            self.window.button_size_block(self.image_list)
+            self.window.button_image_prep(self.image_list)
 
         print(obj)
 

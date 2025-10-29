@@ -12,8 +12,9 @@ class Image_Mian_Window():
         self.b.setupUi(self.a)
         self.a.show()
         self.a.setWindowFlags(Qt.WindowType.Window|Qt.WindowType.MSWindowsFixedSizeDialogHint)
-        self.connectors = []
-        self.button_size_block(images)
+        self.buttons = []
+        self._button_prop()
+        self.button_image_prep(images)
 
 
 
@@ -27,7 +28,36 @@ class Image_Mian_Window():
 
 
 
-    def button_size_block(self,images):
+    def button_image_prep(self,images,parent_images=None):
+        for button_num in range(len(self.buttons)):
+            bh:ButtonHelper=self.buttons[button_num]
+
+
+            if button_num>len(images)-1:
+                bh.button.setIcon(QPixmap())
+                bh.set_none()
+                continue
+
+            img = images[button_num]
+
+            if isinstance(img,QPixmap):
+                self.button_image(bh.button, img)
+                bh.set_img(img)
+
+            elif isinstance(img,list):
+                img_pixmap=QPixmap()
+                img_pixmap.load('folder.png')
+                self.button_image(bh.button, img_pixmap)
+                bh.set_list(img,images)
+
+        img_pixmap = QPixmap()
+        img_pixmap.load('folder_up.png')
+        self.button_image(self.buttons[8].button, img_pixmap)
+        self.buttons[8].set_list(parent_images)
+
+
+
+    def _button_prop(self):
         for button_num in range(1,10):
             button=f'Button{button_num}'
             if not hasattr(self.b,button):
@@ -38,23 +68,9 @@ class Image_Mian_Window():
             a.setSizePolicy(QSizePolicy.Policy.Fixed,QSizePolicy.Policy.Fixed)
 
             bh=ButtonHelper(a,ButtonHelper.TYPE_NONE)
-            self.connectors.append(bh)
-
-            if button_num>len(images):
-                a.setIcon(QPixmap())
-                bh.set_none()
-                continue
-
-            if isinstance(images[button_num-1],QPixmap):
-                self.button_image(a, images[button_num - 1])
-                bh.set_img(images[button_num-1])
-
-            elif isinstance(images[button_num-1],list):
-                img=QPixmap()
-                img.load('folder.png')
-                self.button_image(a, img)
-                bh.set_list(images[button_num-1])
-
+            bh.image_clicked.connect(lambda: print('work'))
+            bh.list_clicked.connect(self.button_image_prep)
+            self.buttons.append(bh)
 
 
 

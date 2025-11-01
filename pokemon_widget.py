@@ -3,7 +3,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt
 import ui_widget,requests,json,QtPixmapUtils,imageWindowMain
 from io import BytesIO
-
+from folder_helper import Folder
 
 
 class Pok_Widget():
@@ -31,9 +31,11 @@ class Pok_Widget():
         self.b.graphicsView.setScene(self.scene_create(pok_dict['sprites']['front_default']))
         # self.b.graphicsView.setSceneRect(0,0,self.b.graphicsView.sceneRect().width(),self.b.graphicsView.sceneRect().height())
         self.b.graphicsView.fitInView(self.b.graphicsView.sceneRect(),Qt.AspectRatioMode.KeepAspectRatio)
-        self.image_list=self.image_list_create(pok_dict['sprites'])
+        image_list=self.image_list_create(pok_dict['sprites'])
+        self.folder=Folder(image_list)
         if self.window is not None:
-            self.window.button_image_prep(self.image_list)
+            self.window.button_image_prep(self.folder)
+
 
         print(obj)
 
@@ -67,7 +69,7 @@ class Pok_Widget():
             self.window.a.show()
             self.window.a.activateWindow()
             return
-        self.window=imageWindowMain.Image_Mian_Window(None,self.image_list)
+        self.window=imageWindowMain.Image_Mian_Window(None,self.folder)
         self.window.a.show()
 
 

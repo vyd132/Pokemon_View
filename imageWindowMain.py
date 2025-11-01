@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraph
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt,QSize
 import ui_imageMainform,requests,json,QtPixmapUtils,button_helper
+from folder_helper import Folder
 from button_helper import ButtonHelper
 from io import BytesIO
 
@@ -28,32 +29,35 @@ class Image_Mian_Window():
 
 
 
-    def button_image_prep(self,images,parent_images=None):
+    def button_image_prep(self,folder:Folder):
         for button_num in range(len(self.buttons)):
             bh:ButtonHelper=self.buttons[button_num]
 
 
-            if button_num>len(images)-1:
-                bh.button.setIcon(QPixmap())
-                bh.set_none()
+            if button_num>len(folder.images)-1:
+                img_pixmap = QPixmap()
+                img_pixmap.load('folder.png')
+                button_num=button_num-len(folder.images)
+                if button_num>len(folder.children)-1:
+                    img_pixmap = QPixmap()
+                    self.button_image(bh.button,img_pixmap)
+                    bh.set_none()
+                    continue
+                self.button_image(bh.button, img_pixmap)
+                bh.set_list(folder.children[button_num])
                 continue
 
-            img = images[button_num]
+            img = folder.images[button_num]
 
-            if isinstance(img,QPixmap):
-                self.button_image(bh.button, img)
-                bh.set_img(img)
+            self.button_image(bh.button, img)
+            bh.set_img(img)
 
-            elif isinstance(img,list):
-                img_pixmap=QPixmap()
-                img_pixmap.load('folder.png')
-                self.button_image(bh.button, img_pixmap)
-                bh.set_list(img,images)
-
+        if folder.parent is None:
+            return
         img_pixmap = QPixmap()
         img_pixmap.load('folder_up.png')
         self.button_image(self.buttons[8].button, img_pixmap)
-        self.buttons[8].set_list(parent_images)
+        self.buttons[8].set_list(folder.parent)
 
 
 

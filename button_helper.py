@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter,QWidget,QGraph
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt,QSize,Signal,QObject
 import ui_imageMainform,requests,json,QtPixmapUtils
+from folder_helper import Folder
 from io import BytesIO
 
 class ButtonHelper(QObject):
@@ -9,7 +10,7 @@ class ButtonHelper(QObject):
     TYPE_IMG='IMG'
     TYPE_NONE='Nothing'
     image_clicked=Signal()
-    list_clicked=Signal(list,list)
+    list_clicked=Signal(Folder)
 
 
 
@@ -22,10 +23,9 @@ class ButtonHelper(QObject):
         self.parent=None
 
 
-    def set_list(self,list_img,parent=None):
+    def set_list(self,list_img):
         self.type = self.TYPE_LIST
         self.obj=list_img
-        self.parent=parent
 
     def set_img(self,img):
         self.type = self.TYPE_IMG
@@ -38,7 +38,7 @@ class ButtonHelper(QObject):
 
     def on_clicked(self):
         if self.type==self.TYPE_LIST:
-            self.list_clicked.emit(self.obj,self.parent)
+            self.list_clicked.emit(self.obj)
         if self.type==self.TYPE_IMG:
             self.image_clicked.emit()
         if self.type==self.TYPE_NONE:

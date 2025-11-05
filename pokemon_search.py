@@ -29,7 +29,6 @@ class PokemonSearch(QObject):
     def eventFilter(self, obj: QWidget, event):
         if event.type() != QEvent.Type.KeyPress:
             return super().eventFilter(obj, event)
-        print(obj,event)
         if obj is self.l:
             return self.eventFliter_list(event)
         if obj is self.text:

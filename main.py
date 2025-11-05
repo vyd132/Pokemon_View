@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QApplication,QMainWindow,QCompleter
 from PySide6.QtCore import QSortFilterProxyModel
 a=requests.get('https://pokeapi.co/api/v2/pokemon/')
 pokemon_list=json.loads(a.content)
-print(pokemon_list)
+
 # b=json.loads(a.content)
 # print(b)
 poklist=pokemon_list_model.PokList()
@@ -33,7 +33,7 @@ pokwidget=pokemon_widget.Pok_Widget(ui.Pokwidget)
 # image_main_widget=imageWindowMain.Image_Mian_Window(None)
 
 def aba():
-    print(ui.pokemonView.currentIndex())
+
     model=ui.pokemonView.model()
     index=ui.pokemonView.currentIndex()
     if not index.isValid():

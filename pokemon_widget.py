@@ -65,6 +65,8 @@ class Pok_Widget():
         image = self.cache.data_get(url)
         image = BytesIO(image).read()
 
+        
+
         pixmap = QPixmap()
         pixmap.loadFromData(image)
         pixmap = QtPixmapUtils.crop_transparent_area(pixmap)
